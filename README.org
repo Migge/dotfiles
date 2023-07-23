@@ -29,3 +29,19 @@ config file rather small.
 
 Which this one currently is. As of today it only contains the Dracula
 theme, font selection, and some slight window transparency.
+
+* Ranger
+
+I mainly use Midnight Commander (MC) for actual file _management_, but
+Ranger is nice for simple browsing, and its image and PDF previews
+that work inside the tool is very convenient, something MC doesn't
+support. The multiple panes showing the tree structure is very nice
+also.
+
+This is a basic configuration; the only thing added is the Dracula
+theme as well as the oneliner:
+
+~default_linemode_devicons~
+
+, to enable the icons for the directory and file types which makes it
+look a bit nicer.
