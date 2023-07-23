@@ -1,6 +1,7 @@
 #+TITLE: Migges's dotfiles
 #+AUTHOR: Migge
 #+DESCRIPTION: Description and dotfiles for some of my Linux configuration
+#+STARTUP: showeverything
 
 * Fonts
 
@@ -15,3 +16,16 @@ I plan to include this in an upcoming script, the preferred location,
 which is one of the default ones the system will look for, is the
 ~.fonts/~ directory in your home, as then the script won't require
 root privileges.
+
+* Alacritty
+
+Currently my terminal of choice. Actually I am one of those who have
+nothing against the standard Gnome terminal; main reason for switching
+is to easier get rid of the window title bar, which is surprisingly
+difficult to do. Plus these hipster terminals such as Kitty and
+Alacritty seems to just play along more nicely with tiling window
+managers in general and highly customizable while still keeping the
+config file rather small.
+
+Which this one currently is. As of today it only contains the Dracula
+theme, font selection, and some slight window transparency.

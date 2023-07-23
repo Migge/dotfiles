@@ -1,0 +1,19 @@
+import:
+  - ~/.config/alacritty/dracula.yml
+window:
+  opacity: 0.93
+
+font:
+  normal:
+    family: SauceCodePro Nerd Font Mono
+    style: Medium
+  bold:
+    family: SauceCodePro Nerd Font Mono
+    style: Bold
+  italic:
+    family: SauceCodePro Nerd Font Mono
+    style: MediumItalic
+  bold_italic:
+    family: SauceCodePro Nerd Font Mono
+    style: BoldItalic
+  size: 12
