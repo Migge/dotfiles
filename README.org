@@ -1,0 +1,3 @@
+#+TITLE: Migges's dotfiles
+#+AUTHOR: Migge
+#+DESCRIPTION: Description and dotfiles for some of my Linux configuration
