@@ -1,3 +1,17 @@
 #+TITLE: Migges's dotfiles
 #+AUTHOR: Migge
 #+DESCRIPTION: Description and dotfiles for some of my Linux configuration
+
+* Fonts
+
+My setup is dependent on a font used by the terminal, namely
+SourceCodePro (or Sauce Code Pro) from the Nerd Fonts collection. The
+latest version is always available at the following link:
+
+https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.tar.xz
+
+, and should be unpacked into a fonts directory of your choice. Since
+I plan to include this in an upcoming script, the preferred location,
+which is one of the default ones the system will look for, is the
+~.fonts/~ directory in your home, as then the script won't require
+root privileges.
