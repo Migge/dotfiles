@@ -3,6 +3,27 @@
 #+DESCRIPTION: Description and dotfiles for some of my Linux configuration
 #+STARTUP: showeverything
 
+The intention is for all of this to be symlinked. There are some
+interesting attempts by people in the community to actually have the
+Git repo set up so that it can be cloned in the home directory
+directly, without any additional needs to set up anything except for
+the actual cloning itself. I personally am not convinced, and see not
+that much added value, especially not in relation to the slight
+complexity and potential confusion.
+
+What I am thinking of doing however is to add a shell script that sets
+up all the sym links automatically.
+
+This is especially useful given that not everything in this setup is
+contained in the repository itself, and at the moment that is mainly
+the fonts. They are simply to big for my taste to have included in the
+repo. The same might go for any wallpapers in the future in case I end
+up including that type of configuration as well.
+
+Anyway, the shell script can then download/wget/curl any additional
+content from the web and put the content in the correct location,
+without having to have that content inside the repo itself.
+
 * Fonts
 
 My setup is dependent on a font used by the terminal, namely
@@ -62,3 +83,12 @@ just simple configuration which are not particularly magical and
 hardly worth mentioning as those configs were not done by editing the
 config files, and instead relying of simple settings done inside the
 tool itself and got saved in the config file automatically.
+
+* Emacs
+
+Emacs will be a chapter of its own, as that will, and already is, at
+the very heart of my workflow. I am currently working on my Emacs
+configuration from scratch and is in a traditional .emacs file. I do
+intend to move the Emacs configuration into an orgmode file, which is
+a more modern way of having a self-documenting Emacs configuration, as
+those tends to become very lengthy, nerdy, and personal.
