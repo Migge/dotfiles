@@ -45,3 +45,20 @@ theme as well as the oneliner:
 
 , to enable the icons for the directory and file types which makes it
 look a bit nicer.
+
+* Midnight Commander
+
+The file manager of choice, as for actual _management_ of files I
+simply like the two panes, and the Emacs keybindings suits me well
+also. Ranger's vim bindings are actually very convenient also for
+one-hand browsing, but agan, for actual management of files I simply
+like Midnight Commander more. Nothing stops me from using both
+depending on the situation.
+
+The main configuration here is again the themeing, which ended up just
+being removing all colors, which made it inherit the terminal theme
+very nicely including the terminal transparency. There is also some
+just simple configuration which are not particularly magical and
+hardly worth mentioning as those configs were not done by editing the
+config files, and instead relying of simple settings done inside the
+tool itself and got saved in the config file automatically.
