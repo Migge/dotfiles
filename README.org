@@ -38,6 +38,21 @@ which is one of the default ones the system will look for, is the
 ~.fonts/~ directory in your home, as then the script won't require
 root privileges.
 
+* Dracula theme
+
+This is subject to change, as I am leaning towards the Nord theme. The
+Dracula theme is good to start out with though as they have a really
+good site that collects styles and themes for a lot of tools along
+with instructions how to enable them.
+
+In many cases, the themeing is done by bundling the theme inside the
+individual program configs themselves. But for Midnight Commander, for
+example, that tool looks for skins stored in the
+~.local/share/mc/skins~, and one needs to wget and put the Dracula
+theme into that folder:
+
+https://raw.githubusercontent.com/dracula/midnight-commander/master/skins/dracula256.ini
+
 * Alacritty
 
 Currently my terminal of choice. Actually I am one of those who have
@@ -77,12 +92,15 @@ like Midnight Commander more. Nothing stops me from using both
 depending on the situation.
 
 The main configuration here is again the themeing, which ended up just
-being removing all colors, which made it inherit the terminal theme
-very nicely including the terminal transparency. There is also some
-just simple configuration which are not particularly magical and
-hardly worth mentioning as those configs were not done by editing the
-config files, and instead relying of simple settings done inside the
-tool itself and got saved in the config file automatically.
+being removing all colors, which made it inherit some terminal
+properties very nicely including the terminal transparency; and then
+the skin downloaded in an earlier section in this document.
+
+On top of this, there is also some just simple configuration which are
+not particularly magical and hardly worth mentioning as those configs
+were not done by editing the config files, and instead relying of
+simple settings done inside the tool itself and got saved in the
+config file automatically.
 
 * Emacs
 
