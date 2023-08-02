@@ -10,12 +10,19 @@
   (setq use-package-always-ensure t
         use-package-expand-minimally t))
 
-(use-package dracula-theme
-  :ensure dracula-theme)
+(use-package dracula-theme)
+(use-package groovy-mode)
+(use-package yaml-mode)
+(use-package vertico)
+(use-package marginalia)
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(custom-enabled-themes '(dracula))
@@ -26,6 +33,8 @@
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
  '(menu-bar-mode nil)
+ '(package-selected-packages
+   '(marginalia marginalia-mode vertico vertico-mode yaml-mode groovy-mode use-package dracula-theme))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -39,3 +48,15 @@
 
 ;; Add Ctrl-Tab support for switching multiple windows
 (global-set-key (kbd "C-<tab>") 'other-window)
+
+(file-name-shadow-mode 1)
+(add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
+
+(setq vertico-resize nil)
+(vertico-mode 1)
+
+(marginalia-mode 1)
+
+(setq delete-by-moving-to-trash t)
+
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
