@@ -15,6 +15,9 @@
 (use-package yaml-mode)
 (use-package vertico)
 (use-package marginalia)
+(use-package plantuml-mode)
+(use-package json-mode)
+(use-package kotlin-mode)
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 
@@ -34,7 +37,7 @@
  '(ispell-dictionary nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(marginalia marginalia-mode vertico vertico-mode yaml-mode groovy-mode use-package dracula-theme))
+   '(kotlin-mode json-mode plantuml-mode marginalia marginalia-mode vertico vertico-mode yaml-mode groovy-mode use-package dracula-theme))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -60,3 +63,26 @@
 (setq delete-by-moving-to-trash t)
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+
+;; Plantuml
+(require 'ob-plantuml)
+
+(setq org-plantuml-jar-path (expand-file-name "~/Dropbox/linux/plantuml.jar"))
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+;; (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+(with-eval-after-load 'org
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((plantuml . t))))
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+(defun my-org-confirm-babel-evaluate (lang body)
+  (not (string= lang "plantuml")))  ; don't ask for plantuml
+(setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)
+
+
+;; JSON
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq tab-width 2)
+            (setq js-indent-level 2)))

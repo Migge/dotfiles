@@ -87,8 +87,8 @@ skin=dracula256
 
 [Layout]
 output_lines=0
-left_panel_size=61
-top_panel_size=0
+left_panel_size=40
+top_panel_size=12
 message_visible=false
 keybar_visible=true
 xterm_title=true
