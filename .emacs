@@ -1,6 +1,7 @@
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -18,6 +19,7 @@
 (use-package plantuml-mode)
 (use-package json-mode)
 (use-package kotlin-mode)
+(use-package dart-mode)
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 
@@ -37,7 +39,7 @@
  '(ispell-dictionary nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(kotlin-mode json-mode plantuml-mode marginalia marginalia-mode vertico vertico-mode yaml-mode groovy-mode use-package dracula-theme))
+   '(unfill dart-mode lsp-mode lsp-dart lsp-treemacs-flycheck company lsp-ui hover kotlin-mode json-mode plantuml-mode marginalia marginalia-mode vertico vertico-mode yaml-mode groovy-mode use-package dracula-theme))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -86,3 +88,10 @@
             (make-local-variable 'js-indent-level)
             (setq tab-width 2)
             (setq js-indent-level 2)))
+
+
+;; Dart
+(add-hook 'dart-mode-hook 'lsp)
+
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024))
