@@ -37,7 +37,7 @@
  '(ispell-dictionary nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(kotlin-mode json-mode plantuml-mode marginalia marginalia-mode vertico vertico-mode yaml-mode groovy-mode use-package dracula-theme))
+   '(typescript-mode swift-mode unfill kotlin-mode json-mode plantuml-mode marginalia marginalia-mode vertico vertico-mode yaml-mode groovy-mode use-package dracula-theme))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -67,7 +67,7 @@
 ;; Plantuml
 (require 'ob-plantuml)
 
-(setq org-plantuml-jar-path (expand-file-name "~/Dropbox/linux/plantuml.jar"))
+(setq org-plantuml-jar-path (expand-file-name "~/Documents/plantuml.jar"))
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 ;; (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 (with-eval-after-load 'org
@@ -86,3 +86,5 @@
             (make-local-variable 'js-indent-level)
             (setq tab-width 2)
             (setq js-indent-level 2)))
+
+(setq typescript-indent-level 2)
