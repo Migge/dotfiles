@@ -1,0 +1,6 @@
+#+TITLE: cmus configuration
+#+AUTHOR: Migge
+
+Compared to some other configurations, this will likely not be a
+directory to be symlinked in its entirety. But the Dracula theme can
+at least be copied from here.
