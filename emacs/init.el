@@ -4,7 +4,8 @@
 ;; Personal Emacs configuration.
 ;;
 ;; This file bootstraps package management and installs configured packages
-;; automatically when they are missing.
+;; automatically when they are missing.  Settings that must apply before the
+;; first frame is drawn live in early-init.el.
 
 ;;; Code:
 
@@ -17,9 +18,9 @@
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("melpa"  . "https://melpa.org/packages/")))
 
-;; Package initialization happens automatically in recent Emacs versions,
-;; but calling this explicitly also supports older versions.
-(package-initialize)
+;; Emacs 27 and later activate installed packages before loading this file.
+(when (< emacs-major-version 27)
+  (package-initialize))
 
 (defun my/package-refresh-if-needed ()
   "Refresh package metadata when no archive metadata is available."
@@ -38,6 +39,9 @@
 
 ;;;; Keep generated Custom settings separate
 
+;; Custom writes its settings (including `package-selected-packages') to this
+;; machine-local file instead of appending them to this version-controlled
+;; init.el.
 (setq custom-file
       (expand-file-name "custom.el" user-emacs-directory))
 
@@ -54,7 +58,6 @@
 ;;;; Interface
 
 (setq inhibit-startup-screen t
-      delete-by-moving-to-trash t
       display-line-numbers-type 'relative)
 
 (menu-bar-mode -1)
@@ -65,13 +68,16 @@
   :config
   (load-theme 'dracula t))
 
+;; Show the available keys after typing a prefix such as C-c l.
+;; Built into Emacs 30; installed from GNU ELPA on older versions.
+(use-package which-key
+  :init
+  (which-key-mode 1))
+
 ;;;; General editing behavior
 
 ;; Automatically reload files changed outside Emacs.
 (global-auto-revert-mode 1)
-
-;; Warn when part of a file name is hidden by an environment variable.
-(file-name-shadow-mode 1)
 
 ;; Move deleted files to the operating system's trash.
 (setq delete-by-moving-to-trash t)
@@ -121,20 +127,23 @@
   (treesit-auto-add-to-auto-mode-alist '(javascript typescript tsx css html))
   (global-treesit-auto-mode))
 
-
 ;;;; LSP
 
+;; Start LSP only in modes that have a language server configured, rather than
+;; in every `prog-mode' buffer (which includes Emacs Lisp).  Run M-x lsp to
+;; start it manually elsewhere.
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook ((prog-mode . lsp-deferred)
+  :hook (((js-ts-mode typescript-ts-mode tsx-ts-mode css-ts-mode
+           json-mode kotlin-mode groovy-mode dart-mode)
+          . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
-  :custom
-  (read-process-output-max (* 1024 1024))
   :custom
   (lsp-clients-typescript-prefer-use-project-ts-server t)
   :init
   (setq lsp-completion-provider :none)
-  (setq lsp-keymap-prefix "C-c")
+  ;; A bare "C-c" would shadow every major-mode binding under C-c.
+  (setq lsp-keymap-prefix "C-c l")
   (setq lsp-diagnostics-provider :flycheck))
 
 (use-package lsp-ui
@@ -143,22 +152,13 @@
 (use-package flycheck
   :hook (lsp-mode . flycheck-mode)
   :bind (:map flycheck-mode-map
-              ("M-n" . flycheck-previous-error)
-              ("M-p" . flycheck-next-error))
+              ("M-n" . flycheck-next-error)
+              ("M-p" . flycheck-previous-error))
   :custom (flycheck-display-errors-delay .3))
-
-
-;; (use-package lsp-mode
-;;   :commands (lsp lsp-deferred)
-;;   :custom
-;;   ;; Increase the amount of data Emacs can read from language servers.
-;;   (read-process-output-max (* 1024 1024)))
 
 ;;;; Dart
 
-(use-package dart-mode
-  :hook
-  (dart-mode . lsp-deferred))
+(use-package dart-mode)
 
 ;; Provides additional Dart and Flutter integration for lsp-mode.
 (use-package lsp-dart
@@ -171,14 +171,22 @@
   :ensure nil
   :after org)
 
-(use-package plantuml-mode)
+;; Change this path on machines where PlantUML is stored elsewhere.
+(defvar my/plantuml-jar-path
+  (expand-file-name "plantuml.jar" user-emacs-directory)
+  "Local PlantUML jar used by both `plantuml-mode' and Org Babel.")
+
+;; Render with the local jar.  The package default, `server', uploads every
+;; previewed diagram to plantuml.com.
+(use-package plantuml-mode
+  :custom
+  (plantuml-default-exec-mode 'jar)
+  (plantuml-jar-path my/plantuml-jar-path))
 
 (with-eval-after-load 'org
   (require 'ob-plantuml)
 
-  ;; Change this path on machines where PlantUML is stored elsewhere.
-  (setq org-plantuml-jar-path
-        (expand-file-name "~/.emacs.d/plantuml.jar"))
+  (setq org-plantuml-jar-path my/plantuml-jar-path)
 
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
@@ -199,34 +207,9 @@
 ;;;; Performance
 
 ;; Give language servers and other subprocesses a larger communication buffer.
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024))
-
-;;;; Frame appearance
-
-(defun my/configure-frame (frame)
-  "Apply personal appearance settings to FRAME."
-  (with-selected-frame frame
-    (when (display-graphic-p)
-      (set-frame-parameter frame 'undecorated t)
-
-      ;; `alpha-background' is supported by newer Emacs versions.
-      (when (>= emacs-major-version 29)
-        (set-frame-parameter frame 'alpha-background 85)))))
-
-;; Apply settings to the initial frame.
-(my/configure-frame (selected-frame))
-
-;; Apply settings to frames created by emacsclient or later commands.
-(add-hook 'after-make-frame-functions #'my/configure-frame)
-
-(add-to-list 'default-frame-alist '(undecorated . t))
-
-(when (>= emacs-major-version 29)
-  (add-to-list 'default-frame-alist '(alpha-background . 85)))
+;; The garbage-collection threshold is raised in early-init.el.
+(setq read-process-output-max (* 1024 1024))
 
 (provide 'init)
 
-
 ;;; init.el ends here
-
