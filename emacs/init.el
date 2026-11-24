@@ -82,6 +82,16 @@
 ;; Move deleted files to the operating system's trash.
 (setq delete-by-moving-to-trash t)
 
+;; M-q fills the paragraph; pressing it again straight away joins the
+;; paragraph back into a single line.  Works on the region when one is active.
+(use-package unfill
+  :bind ([remap fill-paragraph] . unfill-toggle))
+
+;; Org binds M-q directly to `org-fill-paragraph'.  `unfill-toggle' still
+;; fills with Org's rules, since Org sets it as `fill-paragraph-function'.
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "M-q") #'unfill-toggle))
+
 ;; Switch to the next window with Ctrl+Tab.
 (global-set-key (kbd "C-<tab>") #'other-window)
 
